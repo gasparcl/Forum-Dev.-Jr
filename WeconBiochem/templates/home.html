@@ -1,0 +1,38 @@
+<head>
+    <title>Dev. Jr - Início</title>
+</head>
+
+{% extends 'base.html' %}
+
+{% block body %}
+
+        <div class="container">
+            <h1 style="color: orange">Dev. Jr - Fórum de Dúvidas</h1>
+            <h2>Este site foi criado de um Dev. iniciante para Devs. iniciantes.</h2>
+            <h4 style="color: orange">Crie seu post e compartilhe sua dúvida.</h4>
+            <hr>
+            {% for post in posts %}
+            <div class="container">
+                <div class="row border mt-4 p-3 meupost">
+                    <div class="col-3" style="text-align: center">
+                        <div class="image pe-2"><img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="170"></div>
+                        <div class="col mt-1" style="text-align: center">
+                            <h5><strong>{{ post.autor.username }}</strong></h5>
+                        </div>
+                        <div class="row justify-content-center">
+                            {% for curso in post.autor.cursos.split(';') %}
+                                        <button type="button" class="btn btn-info mt-1" disabled>{{ curso }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <a style="text-decoration: none" href="{{ url_for('exibir_post',post_id=post.id) }}"><h3><strong>{{ post.titulo }}</strong></h3></a>
+                        <p>{{ post.corpo }}</p>
+                        <small class="text-muted" style="font-size: 15px">Data Criação: {{ post.data_criacao.strftime('%d/%m/%Y') }}</small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+{% endblock %}
